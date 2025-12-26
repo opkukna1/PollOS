@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+// Ensure yeh path sahi ho jahan tumne pichla screen save kiya tha
+import '../screens/team/create_team_screen.dart'; 
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Mock Data: Asli app mein ye Riverpod se aayega
+    // Mock Data: Asli app mein ye Riverpod (teamsProvider) se aayega
     final teams = [
       {'name': 'National Core Team', 'role': 'Admin', 'type': 'Organization'},
       {'name': 'Rajasthan Youth Wing', 'role': 'State Head', 'type': 'Independent'},
-      {'name': 'Jaipur IT Cell', 'role': 'Cadre', 'type': 'Independent'},
+      {'name': 'Team Vikram Singh', 'role': 'Politician', 'type': 'Constituency'}, // New Type Example
     ];
-    int activeIndex = 0; // Mock active team
+    int activeIndex = 2; // Maan lo abhi hum Politician wali team mein hain
 
     return Drawer(
       backgroundColor: Colors.grey.shade100,
@@ -73,7 +75,7 @@ class AppDrawer extends StatelessWidget {
                     subtitle: Text("${team['role']} • ${team['type']}"),
                     trailing: isActive ? const Icon(Icons.check_circle, color: Colors.deepOrange) : null,
                     onTap: () {
-                      // Yahan Team Switch logic aayega
+                      // Yahan Team Switch Logic aayega (Riverpod state update)
                       Navigator.pop(context); // Close drawer
                     },
                   ),
@@ -83,14 +85,40 @@ class AppDrawer extends StatelessWidget {
           ),
 
           const Divider(),
+
+          // 3. Create Independent Team (Politician Action)
+          // Highlighted specifically for Leadership
           ListTile(
-            leading: const Icon(Icons.add_circle_outline),
-            title: const Text("Create or Join New Team"),
-            onTap: () {},
+            leading: const Icon(Icons.add_business, color: Colors.deepOrange),
+            title: const Text(
+              "Create Independent Team",
+              style: TextStyle(
+                color: Colors.deepOrange, 
+                fontWeight: FontWeight.bold
+              )
+            ),
+            subtitle: const Text("For Politicians & Leaders", style: TextStyle(fontSize: 12)),
+            onTap: () {
+              Navigator.pop(context); // Drawer band karo
+              // Create Team Screen par jao
+              Navigator.push(context, MaterialPageRoute(builder: (_) => const CreateTeamScreen()));
+            },
           ),
-          const SizedBox(height: 16),
+
+          // 4. Join Team (Cadre Action)
+          ListTile(
+            leading: const Icon(Icons.group_add_outlined),
+            title: const Text("Join Existing Team"),
+            subtitle: const Text("Using Invite Code"),
+            onTap: () {
+              // Future: Open Join Dialog
+            },
+          ),
+          
+          const SizedBox(height: 20), // Bottom padding
         ],
       ),
     );
   }
 }
+
