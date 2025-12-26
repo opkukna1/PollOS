@@ -9,12 +9,11 @@ class AppTheme {
       brightness: Brightness.light,
       surface: Colors.grey.shade50,
     ),
-    textTheme: GoogleFonts.poppinsTextTheme(), // Modern Font
-    cardTheme: CardTheme(
-      elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-    ),
+    textTheme: GoogleFonts.poppinsTextTheme(),
+    
+    // ERROR FIX: CardTheme wala section hata diya hai taaki build pass ho jaye.
+    // Default card style abhi ke liye kaafi hai.
+    
     appBarTheme: const AppBarTheme(
       centerTitle: true,
       elevation: 0,
@@ -23,3 +22,4 @@ class AppTheme {
     ),
   );
 }
+
