@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import '../widgets/app_drawer.dart';
-import 'feed_screen.dart';       // Narratives
-import 'team_screen.dart';       // Team
-import 'listening/listening_feed.dart'; // Reports (Village Pulse)
+import 'feed_screen.dart';              // Tab 1: Narratives
+import 'listening/listening_feed.dart'; // Tab 2: Reports (Village Pulse)
+import 'team_screen.dart';              // Tab 3: Team
+import 'profile_screen.dart';           // Tab 4: Profile
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,19 +15,19 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
-  // 4 Tabs for the Bottom Navigation
+  // 4 Tabs: Content, Reports, Team, Profile
   final List<Widget> _pages = [
-    const FeedScreen(),        // Index 0: Content Feed
-    const ListeningFeed(),     // Index 1: Village Reports (New)
-    const TeamScreen(),        // Index 2: Team Management
-    const Center(child: Text("Profile Settings (Coming Soon)")), // Index 3
+    const FeedScreen(),
+    const ListeningFeed(), 
+    const TeamScreen(),
+    const ProfileScreen(),
   ];
 
-  // Title changes based on selected tab
+  // Dynamic Title Logic
   String get _currentTitle {
     switch (_selectedIndex) {
       case 0: return "Narrative Feed";
-      case 1: return "Village Pulse";
+      case 1: return "Village Pulse"; // New Reports Tab
       case 2: return "Team Command";
       case 3: return "My Profile";
       default: return "PollOS";
@@ -36,13 +37,16 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // AppBar Title change hoga tab ke hisaab se
       appBar: AppBar(
         title: Text(_currentTitle),
         actions: [
           IconButton(icon: const Icon(Icons.notifications_outlined), onPressed: () {}),
         ],
       ),
-      drawer: const AppDrawer(), // Tumhara Sidebar Drawer
+      
+      // Tumhara Purana Drawer
+      drawer: const AppDrawer(), 
       
       body: _pages[_selectedIndex],
 
@@ -54,28 +58,28 @@ class _HomeScreenState extends State<HomeScreen> {
           });
         },
         destinations: const [
-          // Tab 1: Narratives
+          // 1. Narratives
           NavigationDestination(
             icon: Icon(Icons.dynamic_feed_outlined),
             selectedIcon: Icon(Icons.dynamic_feed, color: Colors.deepOrange),
             label: 'Narratives',
           ),
           
-          // Tab 2: Reports (New)
+          // 2. Reports (New - Ear Icon represent Listening)
           NavigationDestination(
             icon: Icon(Icons.hearing_outlined),
             selectedIcon: Icon(Icons.hearing, color: Colors.deepOrange),
             label: 'Reports',
           ),
-          
-          // Tab 3: Team
+
+          // 3. Team
           NavigationDestination(
             icon: Icon(Icons.groups_2_outlined),
             selectedIcon: Icon(Icons.groups_2, color: Colors.deepOrange),
             label: 'My Team',
           ),
-          
-          // Tab 4: Profile
+
+          // 4. Profile
           NavigationDestination(
             icon: Icon(Icons.person_outline),
             selectedIcon: Icon(Icons.person, color: Colors.deepOrange),
