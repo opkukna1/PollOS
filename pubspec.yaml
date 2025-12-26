@@ -4,3 +4,5 @@ dependencies:
   flutter_riverpod: ^2.4.0  # State management
   google_fonts: ^6.1.0      # Modern typography
   intl: ^0.18.0
+  font_awesome_flutter: ^10.6.0  # Add this
+  google_sign_in: ^6.1.5         # Add this
