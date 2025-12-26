@@ -1,11 +1,11 @@
 name: pollos
 description: Narrative Build & Break System.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: 'none'
 
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.2.3 <4.0.0'  # <-- YE MISSING THA, ISLIYE ERROR AAYA
+  sdk: '>=3.2.3 <4.0.0'
 
 dependencies:
   flutter:
@@ -21,6 +21,7 @@ dependencies:
   # Auth & Utilities
   google_sign_in: ^6.1.5
   intl: ^0.18.0
+  uuid: ^4.0.0  # <-- ADDED THIS (Zaroori hai ID generation ke liye)
 
 dev_dependencies:
   flutter_test:
