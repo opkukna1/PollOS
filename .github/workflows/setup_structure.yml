@@ -1,0 +1,78 @@
+name: Setup PollOS Project Structure
+
+# Isse tum manually "Run Workflow" button daba ke chala sakte ho
+on: 
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-structure:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Create Architecture Folders
+        run: |
+          # Core Layer
+          mkdir -p lib/core/constants
+          touch lib/core/constants/.gitkeep
+          
+          mkdir -p lib/core/models
+          touch lib/core/models/.gitkeep
+          
+          mkdir -p lib/core/utils
+          touch lib/core/utils/.gitkeep
+
+          # Data Layer (Services & Repositories)
+          mkdir -p lib/data/services
+          touch lib/data/services/.gitkeep
+          
+          mkdir -p lib/data/repositories
+          touch lib/data/repositories/.gitkeep
+
+          # State Management (Riverpod Providers)
+          mkdir -p lib/providers
+          touch lib/providers/.gitkeep
+
+          # UI Layer
+          mkdir -p lib/ui/common_widgets
+          touch lib/ui/common_widgets/.gitkeep
+          
+          mkdir -p lib/ui/screens/auth
+          touch lib/ui/screens/auth/.gitkeep
+          
+          mkdir -p lib/ui/screens/home
+          touch lib/ui/screens/home/.gitkeep
+          
+          mkdir -p lib/ui/screens/content
+          touch lib/ui/screens/content/.gitkeep
+          
+          mkdir -p lib/ui/screens/team
+          touch lib/ui/screens/team/.gitkeep
+          
+          mkdir -p lib/ui/screens/profile
+          touch lib/ui/screens/profile/.gitkeep
+
+          # Assets
+          mkdir -p assets/images
+          touch assets/images/.gitkeep
+          
+          mkdir -p assets/icons
+          touch assets/icons/.gitkeep
+
+      - name: Commit and Push Structure
+        run: |
+          git config --global user.name "PollOS Bot"
+          git config --global user.email "bot@pollos.app"
+          
+          # Check if there are changes to commit
+          if [[ -n $(git status -s) ]]; then
+            git add .
+            git commit -m "Auto-generated PollOS Scalable Folder Structure"
+            git push
+          else
+            echo "Folders already exist. No changes."
+          fi
