@@ -1,8 +1,32 @@
+name: pollos
+description: Narrative Build & Break System.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.2.3 <4.0.0'  # <-- YE MISSING THA, ISLIYE ERROR AAYA
+
 dependencies:
   flutter:
     sdk: flutter
-  flutter_riverpod: ^2.4.0  # State management
-  google_fonts: ^6.1.0      # Modern typography
+  
+  # State Management
+  flutter_riverpod: ^2.4.0
+  
+  # UI & Fonts
+  google_fonts: ^6.1.0
+  font_awesome_flutter: ^10.6.0
+  
+  # Auth & Utilities
+  google_sign_in: ^6.1.5
   intl: ^0.18.0
-  font_awesome_flutter: ^10.6.0  # Add this
-  google_sign_in: ^6.1.5         # Add this
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+
