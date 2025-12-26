@@ -1,6 +1,5 @@
 name: Build PollOS Android APK
 
-# Isse tum manually "Run Workflow" button se chalaoge
 on: 
   workflow_dispatch:
 
@@ -10,11 +9,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Code Checkout
+      # 1. Checkout Code
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # 2. Java Setup (Android build ke liye zaroori hai)
+      # 2. Java Setup
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
@@ -26,22 +25,25 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          flutter-version: '3.19.0' # Ya latest version
+          flutter-version: '3.19.0'
 
-      # 4. Dependencies Download
+      # 4. Generate Android/iOS Folders (YE STEP MISSING THA)
+      # Ye command missing android folder aur gradle files automatically bana degi
+      - name: Create Platform Configs
+        run: flutter create . --org com.pollos.app --project-name pollos
+
+      # 5. Dependencies Download
       - name: Get Dependencies
         run: flutter pub get
 
-      # 5. Build APK (Debug Mode)
-      # Note: Hum 'debug' build use kar rahe hain kyunki 'release' ke liye 
-      # keystore signing keys (secrets) setup karne padenge jo phone se mushkil hai.
-      # Debug APK har phone par chal jayega.
+      # 6. Build APK (Debug Mode)
       - name: Build Android APK
         run: flutter build apk --debug
 
-      # 6. Upload APK to GitHub (Taaki tum download kar sako)
+      # 7. Upload APK
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: PollOS-App-Debug
           path: build/app/outputs/flutter-apk/app-debug.apk
+
