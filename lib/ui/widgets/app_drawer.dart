@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
-// Ensure yeh path sahi ho jahan tumne pichla screen save kiya tha
+// Ensure paths are correct based on previous steps
 import '../screens/team/create_team_screen.dart'; 
+import '../screens/content/poster_maker_screen.dart'; // Import Poster Screen
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Mock Data: Asli app mein ye Riverpod (teamsProvider) se aayega
+    // Mock Data
     final teams = [
       {'name': 'National Core Team', 'role': 'Admin', 'type': 'Organization'},
       {'name': 'Rajasthan Youth Wing', 'role': 'State Head', 'type': 'Independent'},
-      {'name': 'Team Vikram Singh', 'role': 'Politician', 'type': 'Constituency'}, // New Type Example
+      {'name': 'Team Vikram Singh', 'role': 'Politician', 'type': 'Constituency'},
     ];
-    int activeIndex = 2; // Maan lo abhi hum Politician wali team mein hain
+    int activeIndex = 2; 
 
     return Drawer(
       backgroundColor: Colors.grey.shade100,
       child: Column(
         children: [
-          // 1. Drawer Header (User Profile)
+          // 1. Drawer Header
           UserAccountsDrawerHeader(
             decoration: const BoxDecoration(color: Colors.deepOrange),
             accountName: const Text("Vikram Singh", style: TextStyle(fontWeight: FontWeight.bold)),
@@ -35,7 +36,7 @@ class AppDrawer extends StatelessWidget {
             child: Text("SWITCH TEAM", style: TextStyle(color: Colors.grey, fontSize: 12, fontWeight: FontWeight.bold)),
           ),
 
-          // 2. Team List as "Modern Button Cards"
+          // 2. Team List
           Expanded(
             child: ListView.builder(
               padding: EdgeInsets.zero,
@@ -75,8 +76,7 @@ class AppDrawer extends StatelessWidget {
                     subtitle: Text("${team['role']} • ${team['type']}"),
                     trailing: isActive ? const Icon(Icons.check_circle, color: Colors.deepOrange) : null,
                     onTap: () {
-                      // Yahan Team Switch Logic aayega (Riverpod state update)
-                      Navigator.pop(context); // Close drawer
+                      Navigator.pop(context);
                     },
                   ),
                 );
@@ -86,36 +86,56 @@ class AppDrawer extends StatelessWidget {
 
           const Divider(),
 
-          // 3. Create Independent Team (Politician Action)
-          // Highlighted specifically for Leadership
+          // --- NEW FEATURE: CREATIVE TOOLS ---
+          // This is the new section for Poster Maker
+          const Padding(
+            padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
+            child: Text("CREATIVE STUDIO", style: TextStyle(color: Colors.grey, fontSize: 12, fontWeight: FontWeight.bold)),
+          ),
+
+          ListTile(
+            leading: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(color: Colors.purple.shade50, shape: BoxShape.circle),
+              child: const Icon(Icons.brush, color: Colors.purple),
+            ),
+            title: const Text("One-Click Poster Maker", style: TextStyle(fontWeight: FontWeight.bold)),
+            subtitle: const Text("Create Viral Festival Posts"),
+            trailing: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+              decoration: BoxDecoration(color: Colors.red, borderRadius: BorderRadius.circular(4)),
+              child: const Text("NEW", style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold)),
+            ),
+            onTap: () {
+              Navigator.pop(context); // Close Drawer
+              // Open Poster Maker
+              Navigator.push(context, MaterialPageRoute(builder: (_) => const PosterMakerScreen()));
+            },
+          ),
+          
+          const Divider(),
+
+          // 3. Admin Actions
           ListTile(
             leading: const Icon(Icons.add_business, color: Colors.deepOrange),
             title: const Text(
               "Create Independent Team",
-              style: TextStyle(
-                color: Colors.deepOrange, 
-                fontWeight: FontWeight.bold
-              )
+              style: TextStyle(color: Colors.deepOrange, fontWeight: FontWeight.bold)
             ),
             subtitle: const Text("For Politicians & Leaders", style: TextStyle(fontSize: 12)),
             onTap: () {
-              Navigator.pop(context); // Drawer band karo
-              // Create Team Screen par jao
+              Navigator.pop(context);
               Navigator.push(context, MaterialPageRoute(builder: (_) => const CreateTeamScreen()));
             },
           ),
 
-          // 4. Join Team (Cadre Action)
           ListTile(
             leading: const Icon(Icons.group_add_outlined),
             title: const Text("Join Existing Team"),
-            subtitle: const Text("Using Invite Code"),
-            onTap: () {
-              // Future: Open Join Dialog
-            },
+            onTap: () {},
           ),
           
-          const SizedBox(height: 20), // Bottom padding
+          const SizedBox(height: 20),
         ],
       ),
     );
