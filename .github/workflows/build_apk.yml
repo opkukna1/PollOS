@@ -20,23 +20,22 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
-      # 3. Flutter Setup
+      # 3. Setup Flutter (UPDATED: Removes fixed version to get Latest)
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          flutter-version: '3.19.0'
+          # Version line hata di hai, ab ye automatically LATEST version lega
 
-      # 4. Generate Android/iOS Folders (YE STEP MISSING THA)
-      # Ye command missing android folder aur gradle files automatically bana degi
+      # 4. Generate Android Configs
       - name: Create Platform Configs
         run: flutter create . --org com.pollos.app --project-name pollos
 
-      # 5. Dependencies Download
+      # 5. Dependencies
       - name: Get Dependencies
         run: flutter pub get
 
-      # 6. Build APK (Debug Mode)
+      # 6. Build APK
       - name: Build Android APK
         run: flutter build apk --debug
 
