@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../providers/auth_provider.dart';
-import '../home_screen.dart'; // Ensure correct import path
+import 'onboarding_screen.dart'; // <-- UPDATE: Import Onboarding Screen
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -23,12 +23,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     if (mounted) {
       // Check if user is logged in
       final user = ref.read(authProvider);
+      
       if (user != null) {
-        // Navigate to Home Screen (Remove back button)
+        // UPDATE: Navigate to Onboarding Screen instead of Home
+        // Taaki user apna Role aur Phone Number set kar sake
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const HomeScreen()),
+          MaterialPageRoute(builder: (context) => const OnboardingScreen()),
         );
       }
+      
       setState(() => _isLoading = false);
     }
   }
@@ -84,7 +87,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               const Spacer(),
 
               // 3. Google Login Button
-              // "Only Google" requirement enforced here
               SizedBox(
                 width: double.infinity,
                 height: 56,
@@ -95,7 +97,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           width: 24, height: 24, 
                           child: CircularProgressIndicator(strokeWidth: 2, color: Colors.black87)
                         )
-                      : const FaIcon(FontAwesomeIcons.google, color: Colors.black87), // Google Brand Icon
+                      : const FaIcon(FontAwesomeIcons.google, color: Colors.black87),
                   label: Text(
                     _isLoading ? "Signing in..." : "Continue with Google",
                     style: const TextStyle(
@@ -131,3 +133,4 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     );
   }
 }
+
