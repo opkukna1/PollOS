@@ -177,4 +177,23 @@ class _RadioCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12),
         decoration: BoxDecoration(
-          color: isSelected ? color
+          color: isSelected ? color.withOpacity(0.1) : Colors.white,
+          border: Border.all(color: isSelected ? color : Colors.grey.shade300, width: 2),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Column(
+          children: [
+            Icon(icon, color: isSelected ? color : Colors.grey),
+            const SizedBox(height: 4),
+            Text(label, style: TextStyle(
+              color: isSelected ? color : Colors.grey, 
+              fontWeight: FontWeight.bold,
+              fontSize: 12
+            )),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
