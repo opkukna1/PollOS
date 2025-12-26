@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../core/models/models.dart';
-import '../../providers/app_providers.dart';
+// FIX: Added one more "../" to go back to lib folder
+import '../../../core/models/models.dart';
+import '../../../providers/app_providers.dart';
 import '../home_screen.dart';
 
 class OnboardingScreen extends ConsumerStatefulWidget {
@@ -165,3 +166,4 @@ class _RoleCard extends StatelessWidget {
     );
   }
 }
+
