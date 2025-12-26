@@ -2,20 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/models/models.dart';
 import '../../providers/app_providers.dart';
-import 'auth/login_screen.dart'; // Logout ke liye
+import 'auth/login_screen.dart'; // Logout logic
+import 'profile/digital_id_screen.dart'; // <-- IMPORT ADDED HERE
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Mock Data (Asli app mein ye Provider se aayega)
+    // Mock Data: Asli app mein ye Riverpod se aayega
+    // Abhi ke liye hum dummy data use kar rahe hain
     final user = User(
       id: 'u1',
       name: 'Vikram Singh',
       email: 'vikram@pollos.app',
       photoUrl: 'https://i.pravatar.cc/150?img=11',
-      teamRoles: {'t1': Role.politician}, // Mock roles
+      teamRoles: {'t1': Role.politician},
     );
 
     return Scaffold(
@@ -83,20 +85,31 @@ class ProfileScreen extends ConsumerWidget {
               ),
               child: Column(
                 children: [
+                  // --- LINKED DIGITAL ID CARD ---
                   _ProfileMenuItem(
                     icon: Icons.badge, 
                     text: "My Digital ID Card", 
                     onTap: () {
-                      // Future: Show ID Card
+                      // Navigate to the ID Card Screen
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (_) => const DigitalIdScreen()
+                      ));
                     }
                   ),
                   const Divider(height: 1),
+                  
                   _ProfileMenuItem(
                     icon: Icons.language, 
                     text: "App Language (Hindi/English)", 
-                    onTap: () {}
+                    onTap: () {
+                      // Language Toggle Logic (Future)
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text("Language Switcher Coming Soon!"))
+                      );
+                    }
                   ),
                   const Divider(height: 1),
+                  
                   _ProfileMenuItem(
                     icon: Icons.lock_outline, 
                     text: "Privacy & Security", 
@@ -115,8 +128,10 @@ class ProfileScreen extends ConsumerWidget {
                 width: double.infinity,
                 child: OutlinedButton.icon(
                   onPressed: () {
-                    // Logout Logic
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const LoginScreen()));
+                    // Logout Logic -> Back to Login Screen
+                    Navigator.pushReplacement(context, MaterialPageRoute(
+                      builder: (_) => const LoginScreen()
+                    ));
                   },
                   icon: const Icon(Icons.logout, color: Colors.red),
                   label: const Text("Logout", style: TextStyle(color: Colors.red)),
@@ -134,6 +149,8 @@ class ProfileScreen extends ConsumerWidget {
     );
   }
 }
+
+// --- Helper Widgets ---
 
 class _StatsCard extends StatelessWidget {
   final String label, value;
@@ -186,3 +203,4 @@ class _ProfileMenuItem extends StatelessWidget {
     );
   }
 }
+
